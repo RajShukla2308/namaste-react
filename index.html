@@ -8,9 +8,20 @@
 </head>
 <body>
     <div id="root"></div>
+
+    <!-- keep all the script tags at end of the body as browser first loads the files 
+     for script tag and evaluates it. If scripts are added at starting, it will take time 
+     for the other HTML to load. -->
+
+    <!--this file is core of react  -->
+    <!-- this file contains whole code of react which is written in js -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js">
     </script>
+
+    <!-- using this file, react interacts with DOM -->
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+
+
     <script src="App.js">
         
     </script>
