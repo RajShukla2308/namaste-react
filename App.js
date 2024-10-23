@@ -1,3 +1,27 @@
+/***
+ * Parcel Functionalities : 
+ * HMR - Hot Module Replacement
+ * File Watcher Algorithm - C++
+ * BUNDLING
+ * MINIFIED
+ * Cleaning our code
+ * Dev and production build
+ * superfast building algorithm
+ * Image optimization - as it takes longest time to load on browser
+ * Caching while development - delete parcel cache and rebuild - it will take more time to build
+ * Compressions
+ * Compatible with older versions of browsers
+ * HTTPS on local dev - npx parcel index.html --https
+ * manages port number (in case of two servers running in local)
+ * Consistent hashing algorithms - uses to cache things
+ * Zero config bundler
+ * 
+ */
+
+
+import React from 'react';
+import ReactDOM from 'react-dom/client'
+
 const heading  = React.createElement("h1",{
     id:"title"
 },"Namaste Everyone!");
@@ -5,6 +29,8 @@ const heading  = React.createElement("h1",{
 const heading2 = React.createElement("h2",{id:"title2"},"Namaste again");
 
 const container = React.createElement("div",{id: "container"},[heading,heading2])
+
+// -------------
 
 //react element is an object
 //  console.log(heading);
