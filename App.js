@@ -15,42 +15,91 @@
  * manages port number (in case of two servers running in local)
  * Consistent hashing algorithms - uses to cache things
  * Zero config bundler
- * 
+ * Tree shaking - removing unwanted code
  */
 
 
 import React from 'react';
 import ReactDOM from 'react-dom/client'
 
-const heading  = React.createElement("h1",{
-    id:"title"
-},"Namaste Everyone!");
+// React.createElement => Object => html(DOM)
 
-const heading2 = React.createElement("h2",{id:"title2"},"Namaste again");
+// const heading  = React.createElement("h1",{
+//     id:"title",
+//     key:"2015" // to skip re rendiring when a new element is added as sibling.
+// },"Namaste Everyone!");
 
-const container = React.createElement("div",{id: "container"},[heading,heading2])
+// const heading2 = React.createElement("h2",{id:"title2"},"Namaste again");
+
+// const container = React.createElement("div",{id: "container"},[heading,heading2])
 
 // -------------
 
 //react element is an object
 //  console.log(heading);
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+// const root = ReactDOM.createRoot(document.getElementById("root"));
 
 // will see not rendered in browser
 // const root = ReactDOM.createRoot(document.getElementById("root1"));
 
 //passing a react element inside the root
 //injects the element into DOM
-root.render(container);
+// root.render(container);
 
 
 // Example 2---------------
 
-const structure2 = React.createElement("div",{id:'data-container'},
-    React.createElement('h1',{id:'first-heading'},'This is first heading'),
-    React.createElement('h2',{id: 'second-heading'},'This is second heading')
-)
-root.render(structure2);
+// const structure2 = React.createElement("div",{id:'data-container'},
+//     React.createElement('h1',{id:'first-heading'},'This is first heading'),
+//     React.createElement('h2',{id: 'second-heading'},'This is second heading')
+// )
+// root.render(structure2);
 
 // end of Example2--------
+
+
+
+// JSX ?? 
+// JSX (converts to)=> React.createElement (which is an)=> Object 
+// => (then converted into)html and pushed into DOM
+const jsxHeading = (
+    <h1 id="title" key="2015" className="heading">
+        Namaste React from JSX
+        </h1>
+    ) // this is JSX, not a string
+    // for multiple lines, add bracket
+
+//const root = ReactDOM.createRoot(document.getElementById("root"));
+
+// root.render(jsxHeading)
+ 
+// ------------------------
+
+// React components
+
+// functional components - New
+// name of the component will start with capital letters (not mandate)
+
+// class based components - Old
+// name of the component will start with capital letters (not mandate)
+const HeaderComponent = () =>{
+    return (<div>
+         {jsxHeading} 
+         <HeaderComponent2 />
+    <h1 id="fn" className='functional-comp'>Namaste from functional component1 </h1>
+    <h2> this is h2 tag in fn comp 1</h2>
+    {console.log('can write any js code')}
+     </div>)
+}
+
+// same as above
+const HeaderComponent2 = () => (
+    <div>
+        <h1 id="fn" className='functional-comp'>Namaste from functional component2 </h1>
+        <h2> this is h2 tag in fn comp 2</h2>
+     </div>
+    )
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<HeaderComponent />);
