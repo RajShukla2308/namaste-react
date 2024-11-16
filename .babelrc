@@ -1,6 +1,8 @@
 {
-    "plugins": [["transform-remove-console", 
-    { "exclude" : ["error","warn"] } ]
-]
+    // commenting during development
+    // "plugins": [
+    // ["transform-remove-console", 
+    // { "exclude" : ["error","warn"] } ]
+    // ]
     
 }
