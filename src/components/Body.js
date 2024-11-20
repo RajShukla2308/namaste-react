@@ -1,12 +1,13 @@
 import { restaurantList, IMG_CDN_URL } from "./constants";
 import RestaurantCard from './RestaurantCard';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import { Shimmer } from "./Shimmer";
 
 
 function filterData(searchText, restaurants){
     if(searchText == '') return '';
     return restaurants.filter(item=>{
-        if(item?.info?.name.includes(searchText)){
+        if(item?.info?.name.toLowerCase().includes(searchText.toLowerCase())){
             return item;
         }
     })
@@ -20,10 +21,37 @@ const Body = () => {
 
     // searchText is a local state variable
     const [searchText, setSearchText] = useState(); // to create state variables
-    const [restaurants, setRestaurants] = useState(restaurantList);
+    const [allRestaurants, setAllRestaurants] = useState([]);
+    const [filteredRestaurants, setFilteredRestaurants] = useState([]);
 
+    /** 
+    use Effect will get called on every re render. if we want it to be depended on anything,
+    we will just pass the property on the dependency array and it will get called whenever the 
+    dependency changes.
+    */ 
+    /**
+     * If dependency array is empty, userEffect will get called once after first render
+     * If dependency array is [searchText], It will get called after first render 
+     * + each time after render(when the searchtext changes)
+     */
 
-    return (
+    useEffect(()=>{
+        //console.log("useEffect called")
+        getRestaurants();
+    },[]) // dependency array
+   // console.log('comp render')
+
+   async function getRestaurants(){
+    const data = await fetch("https://www.swiggy.com/dapi/restaurants/list/v5?lat=18.61610&lng=73.72860&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+    const json = await data.json();
+    setFilteredRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setAllRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+   }
+
+   if(filteredRestaurants?.length == 0){
+    return <h1> No restaurants found...</h1>
+   }
+    return allRestaurants?.length === 0 ? (<Shimmer />) : (
     <>
     <div className="search-container">
         <input type="text"
@@ -35,16 +63,15 @@ const Body = () => {
            />
         <button className="search-btn" onClick={
             ()=>{
-               const data = filterData(searchText, restaurants);
+               const data = filterData(searchText, allRestaurants);
                // update restaurants
-               if(data == '') setRestaurants(restaurantList)
-                else setRestaurants(data);
+                setFilteredRestaurants(data);
             }
         }>Search</button> {searchText}
     </div>
     <div className='restaurant-list'>
-        {
-            restaurants.map(item=>{
+        {   
+            filteredRestaurants?.map(item=>{
                 return <RestaurantCard {...item.info} key={item.info.id}/>
                 }
             )
