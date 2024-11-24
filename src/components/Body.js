@@ -2,10 +2,11 @@ import { restaurantList, IMG_CDN_URL } from "./constants";
 import RestaurantCard from './RestaurantCard';
 import {useState, useEffect} from 'react';
 import { Shimmer } from "./Shimmer";
+import {Link } from 'react-router-dom';
 
 
 function filterData(searchText, restaurants){
-    if(searchText == '') return '';
+    if(searchText == '') return restaurants;
     return restaurants.filter(item=>{
         if(item?.info?.name.toLowerCase().includes(searchText.toLowerCase())){
             return item;
@@ -48,9 +49,11 @@ const Body = () => {
     setAllRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
    }
 
-   if(filteredRestaurants?.length == 0){
-    return <h1> No restaurants found...</h1>
-   }
+//    if(filteredRestaurants?.length == 0){
+//     return <h1> No restaurants found...</h1>
+//    }
+
+
     return allRestaurants?.length === 0 ? (<Shimmer />) : (
     <>
     <div className="search-container">
@@ -71,12 +74,13 @@ const Body = () => {
     </div>
     <div className='restaurant-list'>
         {   
-            filteredRestaurants?.map(item=>{
-                return <RestaurantCard {...item.info} key={item.info.id}/>
+            filteredRestaurants?.length == 0 ? <h1> No restaurants found...</h1> : filteredRestaurants?.map(item=>{
+                return (
+                    <Link to={"/restaurant/"+ item.info.id} key={item.info.id}><RestaurantCard {...item.info} /></Link>
+                ) 
                 }
             )
         }
-
         {/* <RestaurantCard {...restaurantList[1].info} />
         <RestaurantCard {...restaurantList[2].info}/>
         <RestaurantCard {...restaurantList[3].info}/>

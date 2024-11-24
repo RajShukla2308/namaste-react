@@ -1,9 +1,11 @@
 export const Shimmer = () =>{
-
+    
     return (
-        <>
-            <h1>Loading...</h1>
-        </>
+        <div className="restaurant-list">
+        {Array(10).fill("").map((e,index) =>
+            <div className="shimmer-card" key={index}></div>
+        )}
+        </div>     
     )
 
 }
