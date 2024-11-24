@@ -41,7 +41,7 @@ const RestaurantMenu = () =>{
                         return <>
                             <div className='dish'>
                             <h2 key={item.card.info.id}>{item?.card?.info?.name}</h2>
-                            <h3 key={item.card.info.id}>Price: {item?.card?.info?.price}</h3>
+                            <h3 key={item.card.info.id}>Price: {item?.card?.info?.price / 100}</h3>
                             <h3 key={item.card.info.id}>Ratings: {item?.card?.info?.ratings?.aggregatedRating?.rating}</h3>
                             <img src={IMG_CDN_URL + item?.card?.info?.imageId} />
                             </div>
